@@ -1,8 +1,7 @@
 #include "BiDirDijkstraOpenMP.h"
 
-int BiDirDijkstraOpenMP::isIntersecting(std::vector<bool> fVisited, std::vector<bool> bVisited, int verticesNumber)
+int BiDirDijkstraOpenMP::isIntersecting(const std::vector<bool>& fVisited, const std::vector<bool>& bVisited, int verticesNumber)
 {
-	#pragma omp parallel for
 	for (int i = 0; i < verticesNumber; ++i)
 	{
 		if (fVisited[i] && bVisited[i])
@@ -13,7 +12,8 @@ int BiDirDijkstraOpenMP::isIntersecting(std::vector<bool> fVisited, std::vector<
 
 double BiDirDijkstraOpenMP::ShortestPath(int ** fGraph, int source, int destination, int verticesNumber)
 {
-	unsigned int nthreads = std::thread::hardware_concurrency();
+	//unsigned int nthreads = std::thread::hardware_concurrency();
+	unsigned int nthreads = 2;
 	omp_set_num_threads(nthreads);
 
 	auto start = std::chrono::steady_clock::now();
@@ -22,8 +22,6 @@ double BiDirDijkstraOpenMP::ShortestPath(int ** fGraph, int source, int destinat
 	std::vector<bool> fVisited, bVisited;
 
 	int terminationNode = std::numeric_limits<int>::max();
-
-	std::cout << "number of threads" << omp_get_max_threads() << std::endl;
 
 	#pragma omp parallel sections
 	{

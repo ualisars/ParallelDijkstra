@@ -13,7 +13,7 @@
 
 class BiDirDijkstraOpenMP
 {
-	static int isIntersecting(std::vector<bool> fVisited, std::vector<bool> bVisited, int verticesNumber);
+	static int isIntersecting(const std::vector<bool>& fVisited, const std::vector<bool>& bVisited, int verticesNumber);
 public:
 	static double ShortestPath(int ** graph, int source, int destination, int verticesNumber);
 };
